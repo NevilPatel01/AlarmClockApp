@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 // Alarm Configuration Screen - Clock-app style with edit/delete
 
-=======
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Alert, Platform } from 'react-native';
 import { Surface, Button, Text, Card, IconButton, Chip, Switch } from 'react-native-paper';
@@ -13,7 +10,6 @@ import { CommandBuilder } from '../services/CommandBuilder';
 import { formatTime24, parseTime24 } from '../utils/validation';
 import LoadingOverlay from '../components/LoadingOverlay';
 
-<<<<<<< HEAD
 const AlarmConfigScreen: React.FC = () => {
   const [alarmTime, setAlarmTime] = useState<string>('');
   const [alarmEnabled, setAlarmEnabled] = useState(false);
@@ -21,52 +17,15 @@ const AlarmConfigScreen: React.FC = () => {
   const [selectedTime, setSelectedTime] = useState(new Date());
   const [loadingMessage, setLoadingMessage] = useState('');
 
-=======
-/**
- * AlarmConfigScreen is for managing an alarm configuration. Users can view, set, edit, enable/disable, and delete alarms.
- * It interacts with:
- * BluetoothService: to send alarm commands to a device.
- * StorageService: to persist alarm configurations locally.
- * 
- * @authors Nevil Patel(000892482) and Jaskirat Kaur(000904397)
- * We certify that this material is our original work.
- * No other person's work has been used without suitable acknowledgment and we have not made my work available to anyone else.
- */
-const AlarmConfigScreen: React.FC = () => {
-  // Alarm time in "HH:mm" format
-  const [alarmTime, setAlarmTime] = useState<string>('');
-  // Flag to indicate if alarm is enabled
-  const [alarmEnabled, setAlarmEnabled] = useState(false);
-  // Controls visibility of the time picker
-  const [showPicker, setShowPicker] = useState(false);
-  // Selected Date object for time picker
-  const [selectedTime, setSelectedTime] = useState(new Date());
-  // Message displayed in loading overlay
-  const [loadingMessage, setLoadingMessage] = useState('');
-
-  /**
-   * Load saved alarm configuration on component mount
-   */
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   useEffect(() => {
     loadConfig();
   }, []);
 
-<<<<<<< HEAD
-=======
-  /**
-   * Loads alarm configuration from storage and sets state.
-   */
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   const loadConfig = async () => {
     const config = await StorageService.loadConfig();
     setAlarmTime(config.alarmTime);
     setAlarmEnabled(config.alarmEnabled);
-<<<<<<< HEAD
     
-=======
-
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
     if (config.alarmTime) {
       const { hours, minutes } = parseTime24(config.alarmTime);
       const date = new Date();
@@ -75,7 +34,6 @@ const AlarmConfigScreen: React.FC = () => {
     }
   };
 
-<<<<<<< HEAD
   const handleTimeChange = (event: any, date?: Date) => {
     if (Platform.OS === 'android') {
       // On Android, the picker shows a dialog with OK/Cancel buttons
@@ -91,39 +49,12 @@ const AlarmConfigScreen: React.FC = () => {
       }
     } else {
       // iOS - keep picker open, let user use our Save/Cancel buttons
-=======
-  /**
-   * Handles time picker changes.
-   * On Android, automatically saves time when user presses OK.
-   * On iOS, updates selectedTime state.
-   *
-   * @param {any} event - Time picker event
-   * @param {Date} [date] - Selected date/time
-   */
-  const handleTimeChange = (event: any, date?: Date) => {
-    if (Platform.OS === 'android') {
-      if (event.type === 'set' && date) {
-        setSelectedTime(date);
-        handleSaveAlarmAfterTimeSelection(date);
-      } else if (event.type === 'dismissed') {
-        setShowPicker(false);
-      }
-    } else {
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       if (date) {
         setSelectedTime(date);
       }
     }
   };
 
-<<<<<<< HEAD
-=======
-  /**
-   * Saves alarm configuration immediately after time selection (Android).
-   *
-   * @param {Date} date - Selected alarm time
-   */
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   const handleSaveAlarmAfterTimeSelection = async (date: Date) => {
     if (!BluetoothService.isConnected()) {
       setShowPicker(false);
@@ -135,15 +66,9 @@ const AlarmConfigScreen: React.FC = () => {
       setLoadingMessage('Setting alarm...');
       setShowPicker(false);
       const timeString = formatTime24(date.getHours(), date.getMinutes());
-<<<<<<< HEAD
       
       console.log('Sending alarm configuration:', { timeString, enabled: true });
       
-=======
-
-      console.log('Sending alarm configuration:', { timeString, enabled: true });
-
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       const commands = [
         CommandBuilder.buildAlarmTimeCommand(timeString),
         CommandBuilder.buildAlarmEnableCommand(true),
@@ -151,11 +76,7 @@ const AlarmConfigScreen: React.FC = () => {
 
       await BluetoothService.sendCommands(commands);
 
-<<<<<<< HEAD
       // Save to storage
-=======
-      // Persist configuration
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       const config = await StorageService.loadConfig();
       await StorageService.saveConfig({
         ...config,
@@ -166,11 +87,7 @@ const AlarmConfigScreen: React.FC = () => {
       setAlarmTime(timeString);
       setAlarmEnabled(true);
       setLoadingMessage('');
-<<<<<<< HEAD
       
-=======
-
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       console.log('Alarm configuration sent successfully');
       Alert.alert('Success', `Alarm set to ${timeString}`);
     } catch (err) {
@@ -181,12 +98,6 @@ const AlarmConfigScreen: React.FC = () => {
     }
   };
 
-<<<<<<< HEAD
-=======
-  /**
-   * Saves the alarm configuration from the picker manually (iOS Save button).
-   */
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   const handleSaveAlarm = async () => {
     if (!BluetoothService.isConnected()) {
       Alert.alert('Error', 'No device connected');
@@ -196,15 +107,9 @@ const AlarmConfigScreen: React.FC = () => {
     try {
       setLoadingMessage('Setting alarm...');
       const timeString = formatTime24(selectedTime.getHours(), selectedTime.getMinutes());
-<<<<<<< HEAD
       
       console.log('Sending alarm configuration:', { timeString, enabled: true });
       
-=======
-
-      console.log('Sending alarm configuration:', { timeString, enabled: true });
-
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       const commands = [
         CommandBuilder.buildAlarmTimeCommand(timeString),
         CommandBuilder.buildAlarmEnableCommand(true),
@@ -212,10 +117,7 @@ const AlarmConfigScreen: React.FC = () => {
 
       await BluetoothService.sendCommands(commands);
 
-<<<<<<< HEAD
       // Save to storage
-=======
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       const config = await StorageService.loadConfig();
       await StorageService.saveConfig({
         ...config,
@@ -227,11 +129,7 @@ const AlarmConfigScreen: React.FC = () => {
       setAlarmEnabled(true);
       setShowPicker(false);
       setLoadingMessage('');
-<<<<<<< HEAD
       
-=======
-
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       console.log('Alarm configuration sent successfully');
       Alert.alert('Success', `Alarm set to ${timeString}`);
     } catch (err) {
@@ -242,12 +140,6 @@ const AlarmConfigScreen: React.FC = () => {
     }
   };
 
-<<<<<<< HEAD
-=======
-  /**
-   * Toggles alarm on/off state and sends corresponding Bluetooth command.
-   */
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   const handleToggleAlarm = async () => {
     if (!BluetoothService.isConnected()) {
       Alert.alert('Error', 'No device connected');
@@ -257,7 +149,6 @@ const AlarmConfigScreen: React.FC = () => {
     try {
       setLoadingMessage(alarmEnabled ? 'Disabling alarm...' : 'Enabling alarm...');
       const newEnabled = !alarmEnabled;
-<<<<<<< HEAD
       
       console.log('Toggling alarm:', { enabled: newEnabled });
       
@@ -265,14 +156,6 @@ const AlarmConfigScreen: React.FC = () => {
       await BluetoothService.sendCommand(command);
 
       // Save to storage
-=======
-
-      console.log('Toggling alarm:', { enabled: newEnabled });
-
-      const command = CommandBuilder.buildAlarmEnableCommand(newEnabled);
-      await BluetoothService.sendCommand(command);
-
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       const config = await StorageService.loadConfig();
       await StorageService.saveConfig({
         ...config,
@@ -281,11 +164,7 @@ const AlarmConfigScreen: React.FC = () => {
 
       setAlarmEnabled(newEnabled);
       setLoadingMessage('');
-<<<<<<< HEAD
       
-=======
-
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       console.log('Alarm toggled successfully');
       Alert.alert('Success', `Alarm ${newEnabled ? 'enabled' : 'disabled'}`);
     } catch (err) {
@@ -296,12 +175,6 @@ const AlarmConfigScreen: React.FC = () => {
     }
   };
 
-<<<<<<< HEAD
-=======
-  /**
-   * Deletes the current alarm after user confirmation.
-   */
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   const handleDeleteAlarm = async () => {
     Alert.alert(
       'Delete Alarm',
@@ -319,18 +192,11 @@ const AlarmConfigScreen: React.FC = () => {
 
             try {
               setLoadingMessage('Deleting alarm...');
-<<<<<<< HEAD
               
               const command = CommandBuilder.buildAlarmEnableCommand(false);
               await BluetoothService.sendCommand(command);
 
               // Save to storage
-=======
-
-              const command = CommandBuilder.buildAlarmEnableCommand(false);
-              await BluetoothService.sendCommand(command);
-
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
               const config = await StorageService.loadConfig();
               await StorageService.saveConfig({
                 ...config,
@@ -341,11 +207,7 @@ const AlarmConfigScreen: React.FC = () => {
               setAlarmTime('');
               setAlarmEnabled(false);
               setLoadingMessage('');
-<<<<<<< HEAD
               
-=======
-
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
               console.log('Alarm deleted successfully');
               Alert.alert('Success', 'Alarm deleted');
             } catch (err) {
@@ -363,11 +225,7 @@ const AlarmConfigScreen: React.FC = () => {
   return (
     <Surface style={styles.container}>
       <LoadingOverlay visible={!!loadingMessage} message={loadingMessage} />
-<<<<<<< HEAD
       
-=======
-
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       <ScrollView style={styles.content}>
         {alarmTime ? (
           <Card style={styles.alarmCard}>
@@ -437,10 +295,7 @@ const AlarmConfigScreen: React.FC = () => {
         {showPicker && (
           <>
             {Platform.OS === 'android' ? (
-<<<<<<< HEAD
               // Android: Use native time picker dialog with built-in OK/Cancel
-=======
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
               <DateTimePicker
                 value={selectedTime}
                 mode="time"
@@ -449,10 +304,7 @@ const AlarmConfigScreen: React.FC = () => {
                 onChange={handleTimeChange}
               />
             ) : (
-<<<<<<< HEAD
               // iOS: Show inline picker with our custom Cancel/Save buttons
-=======
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
               <Card style={styles.pickerCard}>
                 <Card.Content>
                   <Text variant="titleMedium" style={styles.pickerTitle}>

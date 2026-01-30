@@ -1,12 +1,9 @@
 /**
-<<<<<<< HEAD
  * Error Handler Utility
  * Converts technical error messages into user-friendly messages
  */
 
 /**
-=======
->>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
  * Sanitize error messages by removing technical details
  * and providing user-friendly alternatives
  */

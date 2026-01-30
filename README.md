@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 # AlarmClockApp
 
 A modern React Native app to configure and control an ESP32-based alarm clock over Bluetooth. This project lets you set WiFi credentials, alarm time, brightness, and other settings on your custom ESP32 clock from your phone.
