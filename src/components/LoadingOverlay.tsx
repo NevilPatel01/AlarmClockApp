@@ -1,13 +1,33 @@
+<<<<<<< HEAD
 // Global loading overlay component
+=======
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Portal, Modal, ActivityIndicator, Text } from 'react-native-paper';
 
 interface LoadingOverlayProps {
+<<<<<<< HEAD
   visible: boolean;
   message?: string;
 }
 
+=======
+  /** Whether the overlay is visible */
+  visible: boolean;
+  /** Optional loading message text */
+  message?: string;
+}
+
+/**
+ * LoadingOverlay is to displays the modal with a loading spinner and optional message. 
+ * It is used to indicate ongoing background operations.
+ * 
+ * @authors Nevil Patel(000892482) and Jaskirat Kaur(000904397)
+ * We certify that this material is our original work.
+ * No other person's work has been used without suitable acknowledgment and we have not made my work available to anyone else.
+ */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
 const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ visible, message = 'Loading...' }) => {
   return (
     <Portal>

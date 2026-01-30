@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 // Settings Screen - Time offset, DST, Brightness
 
+=======
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Surface, Button, Switch, Text, Card, TextInput } from 'react-native-paper';
@@ -11,16 +14,49 @@ import { validateTimeOffset, validateBrightness } from '../utils/validation';
 import { MAX_BRIGHTNESS, MIN_BRIGHTNESS } from '../utils/constants';
 import LoadingOverlay from '../components/LoadingOverlay';
 
+<<<<<<< HEAD
 const SettingsScreen: React.FC = () => {
   const [timeOffset, setTimeOffset] = useState(-4);
   const [dstEnabled, setDSTEnabled] = useState(false);
   const [brightness, setBrightness] = useState(5);
   const [loadingMessage, setLoadingMessage] = useState('');
 
+=======
+/**
+ * Screen component for adjusting ESP32 settings.
+ * Users can update time offset (UTC), DST, and display brightness.
+ * Settings are validated, sent via Bluetooth, and saved locally.
+ * 
+ * @authors Nevil Patel(000892482) and Jaskirat Kaur(000904397)
+ * We certify that this material is our original work.
+ * No other person's work has been used without suitable acknowledgment and we have not made my work available to anyone else.
+ */
+const SettingsScreen: React.FC = () => {
+  /** Current UTC offset */
+  const [timeOffset, setTimeOffset] = useState(-4);
+
+  /** Daylight Saving Time toggle */
+  const [dstEnabled, setDSTEnabled] = useState(false);
+
+  /** Display brightness (0-7) */
+  const [brightness, setBrightness] = useState(5);
+
+  /** Loading overlay message */
+  const [loadingMessage, setLoadingMessage] = useState('');
+
+  /** Load stored configuration on mount */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   useEffect(() => {
     loadConfig();
   }, []);
 
+<<<<<<< HEAD
+=======
+  /**
+   * Load existing settings from local storage
+   * and populate the input fields.
+   */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   const loadConfig = async () => {
     const config = await StorageService.loadConfig();
     setTimeOffset(config.timeOffset);
@@ -28,8 +64,17 @@ const SettingsScreen: React.FC = () => {
     setBrightness(config.brightness);
   };
 
+<<<<<<< HEAD
   const handleSendConfig = async () => {
     // Validate
+=======
+  /**
+   * Validate inputs, send settings to ESP32 over Bluetooth,
+   * and save settings locally on success.
+   */
+  const handleSendConfig = async () => {
+    // Validate time offset and brightness
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
     const offsetValidation = validateTimeOffset(timeOffset);
     const brightnessValidation = validateBrightness(brightness);
 
@@ -38,6 +83,10 @@ const SettingsScreen: React.FC = () => {
       return;
     }
 
+<<<<<<< HEAD
+=======
+    // Ensure Bluetooth device is connected
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
     if (!BluetoothService.isConnected()) {
       Alert.alert('Error', 'No device connected');
       return;
@@ -45,9 +94,15 @@ const SettingsScreen: React.FC = () => {
 
     try {
       setLoadingMessage('Sending settings...');
+<<<<<<< HEAD
       
       console.log('Sending settings:', { timeOffset, dstEnabled, brightness });
       
+=======
+      console.log('Sending settings:', { timeOffset, dstEnabled, brightness });
+
+      // Build commands
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       const commands = [
         CommandBuilder.buildOffsetCommand(timeOffset),
         CommandBuilder.buildDSTCommand(dstEnabled),
@@ -55,10 +110,18 @@ const SettingsScreen: React.FC = () => {
       ];
 
       console.log('Commands to send:', commands);
+<<<<<<< HEAD
       
       await BluetoothService.sendCommands(commands);
 
       // Save to storage
+=======
+
+      // Send commands sequentially to ESP32
+      await BluetoothService.sendCommands(commands);
+
+      // Save settings locally
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       const config = await StorageService.loadConfig();
       await StorageService.saveConfig({
         ...config,
@@ -69,7 +132,14 @@ const SettingsScreen: React.FC = () => {
 
       setLoadingMessage('');
       console.log('Settings sent successfully');
+<<<<<<< HEAD
       Alert.alert('Success', `Settings updated:\nUTC Offset: ${timeOffset >= 0 ? '+' : ''}${timeOffset}\nDST: ${dstEnabled ? 'ON' : 'OFF'}\nBrightness: ${brightness}`);
+=======
+      Alert.alert(
+        'Success',
+        `Settings updated:\nUTC Offset: ${timeOffset >= 0 ? '+' : ''}${timeOffset}\nDST: ${dstEnabled ? 'ON' : 'OFF'}\nBrightness: ${brightness}`
+      );
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
     } catch (err) {
       setLoadingMessage('');
       console.error('Failed to send settings:', err);
@@ -80,9 +150,17 @@ const SettingsScreen: React.FC = () => {
 
   return (
     <Surface style={styles.container}>
+<<<<<<< HEAD
       <LoadingOverlay visible={!!loadingMessage} message={loadingMessage} />
       
       <ScrollView style={styles.content}>
+=======
+      {/* Loading overlay */}
+      <LoadingOverlay visible={!!loadingMessage} message={loadingMessage} />
+
+      <ScrollView style={styles.content}>
+        {/* Time Offset Card */}
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
         <Card style={styles.card}>
           <Card.Content>
             <Text variant="titleMedium" style={styles.label}>
@@ -102,6 +180,10 @@ const SettingsScreen: React.FC = () => {
           </Card.Content>
         </Card>
 
+<<<<<<< HEAD
+=======
+        {/* DST Card */}
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
         <Card style={styles.card}>
           <Card.Content>
             <View style={styles.row}>
@@ -113,6 +195,10 @@ const SettingsScreen: React.FC = () => {
           </Card.Content>
         </Card>
 
+<<<<<<< HEAD
+=======
+        {/* Brightness Card */}
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
         <Card style={styles.card}>
           <Card.Content>
             <Text variant="titleMedium" style={styles.label}>
@@ -140,6 +226,10 @@ const SettingsScreen: React.FC = () => {
           </Card.Content>
         </Card>
 
+<<<<<<< HEAD
+=======
+        {/* Send button */}
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
         <Button
           mode="contained"
           onPress={handleSendConfig}
@@ -152,6 +242,10 @@ const SettingsScreen: React.FC = () => {
   );
 };
 
+<<<<<<< HEAD
+=======
+/** Styles for SettingsScreen */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -206,4 +300,8 @@ const styles = StyleSheet.create({
   },
 });
 
+<<<<<<< HEAD
 export default SettingsScreen;
+=======
+export default SettingsScreen;
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244

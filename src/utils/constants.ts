@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 // Application constants
 
+=======
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
 export const APP_NAME = 'ESP32 Alarm Clock';
 export const APP_VERSION = '1.0.0';
 

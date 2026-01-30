@@ -14,6 +14,7 @@ interface Props {
   navigation: HomeScreenNavigationProp;
 }
 
+<<<<<<< HEAD
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [devices, setDevices] = useState<BluetoothDevice[]>([]);
   const [loadingMessage, setLoadingMessage] = useState('');
@@ -24,29 +25,85 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [alarmTime, setAlarmTime] = useState('');
   const [alarmEnabled, setAlarmEnabled] = useState(false);
 
+=======
+/**
+ * HomeScreen component displays to bluetooth connection status, WiFi configuration status, alarm status,
+ * quick action buttons and list of available Bluetooth devices.
+ * 
+ * @authors Nevil Patel(000892482) and Jaskirat Kaur(000904397)
+ * We certify that this material is our original work.
+ * No other person's work has been used without suitable acknowledgment and we have not made my work available to anyone else.
+ */
+const HomeScreen: React.FC<Props> = ({ navigation }) => {
+  /** List of discovered Bluetooth devices */
+  const [devices, setDevices] = useState<BluetoothDevice[]>([]);
+
+  /** Message for loading overlay */
+  const [loadingMessage, setLoadingMessage] = useState('');
+
+  /** Indicates if a device is connected */
+  const [isConnected, setIsConnected] = useState(false);
+
+  /** Name of the currently connected device */
+  const [connectedDeviceName, setConnectedDeviceName] = useState('');
+
+  /** WiFi configuration status */
+  const [wifiConfigured, setWifiConfigured] = useState(false);
+
+  /** WiFi SSID */
+  const [wifiSSID, setWifiSSID] = useState('');
+
+  /** Alarm time */
+  const [alarmTime, setAlarmTime] = useState('');
+
+  /** Indicates if alarm is enabled */
+  const [alarmEnabled, setAlarmEnabled] = useState(false);
+
+  /** Load status on mount */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   useEffect(() => {
     loadStatus();
   }, []);
 
+<<<<<<< HEAD
   // Refresh status when screen comes into focus
+=======
+  /** Refresh status when screen comes into focus */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   useFocusEffect(
     React.useCallback(() => {
       loadStatus();
     }, [])
   );
 
+<<<<<<< HEAD
+=======
+  /**
+   * Loads saved configuration and current Bluetooth connection status
+   */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   const loadStatus = async () => {
     const config = await StorageService.loadConfig();
     setWifiConfigured(!!config.wifiSSID);
     setWifiSSID(config.wifiSSID);
     setAlarmTime(config.alarmTime);
     setAlarmEnabled(config.alarmEnabled);
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
     const status = BluetoothService.getConnectionStatus();
     setIsConnected(status.isConnected);
     setConnectedDeviceName(status.deviceName || '');
   };
 
+<<<<<<< HEAD
+=======
+  /**
+   * Scan for available Bluetooth devices
+   */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   const handleScanDevices = async () => {
     try {
       setLoadingMessage('Scanning for devices...');
@@ -59,16 +116,31 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
+<<<<<<< HEAD
+=======
+  /**
+   * Connect to a selected Bluetooth device
+   * @param device - The BluetoothDevice object to connect to
+   */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   const handleConnectDevice = async (device: BluetoothDevice) => {
     try {
       setLoadingMessage(`Connecting to ${device.name}...`);
       await BluetoothService.connect(device);
       await StorageService.saveLastDevice(device);
+<<<<<<< HEAD
       
       setIsConnected(true);
       setConnectedDeviceName(device.name);
       setLoadingMessage('');
       
+=======
+
+      setIsConnected(true);
+      setConnectedDeviceName(device.name);
+      setLoadingMessage('');
+
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
       Alert.alert('Connected', `Successfully connected to ${device.name}`);
       loadStatus();
     } catch (error) {
@@ -77,6 +149,12 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
+<<<<<<< HEAD
+=======
+  /**
+   * Disconnect from the currently connected Bluetooth device
+   */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   const handleDisconnect = async () => {
     try {
       await BluetoothService.disconnect();
@@ -90,9 +168,17 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <Surface style={styles.container}>
+<<<<<<< HEAD
       <LoadingOverlay visible={!!loadingMessage} message={loadingMessage} />
       
       <ScrollView style={styles.content}>
+=======
+      {/* Loading overlay while scanning or connecting */}
+      <LoadingOverlay visible={!!loadingMessage} message={loadingMessage} />
+
+      <ScrollView style={styles.content}>
+        {/* Bluetooth Connection Card */}
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
         <Card style={styles.card}>
           <Card.Content>
             <View style={styles.cardHeader}>
@@ -112,8 +198,15 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           </Card.Content>
         </Card>
 
+<<<<<<< HEAD
         {isConnected && (
           <>
+=======
+        {/* WiFi and Alarm Status when connected */}
+        {isConnected && (
+          <>
+            {/* WiFi Status */}
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
             <Card style={styles.card}>
               <Card.Content>
                 <Text variant="titleMedium">WiFi Configuration</Text>
@@ -131,6 +224,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
               </Card.Content>
             </Card>
 
+<<<<<<< HEAD
+=======
+            {/* Alarm Status */}
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
             <Card style={styles.card}>
               <Card.Content>
                 <Text variant="titleMedium">Alarm Status</Text>
@@ -153,6 +250,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
               </Card.Content>
             </Card>
 
+<<<<<<< HEAD
+=======
+            {/* Quick Actions */}
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
             <View style={styles.actionsContainer}>
               <Text variant="titleMedium" style={styles.sectionTitle}>
                 Quick Actions
@@ -182,6 +283,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           </>
         )}
 
+<<<<<<< HEAD
+=======
+        {/* Device list when not connected */}
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
         {!isConnected && (
           <View style={styles.devicesContainer}>
             <View style={styles.deviceHeader}>
@@ -227,6 +332,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   );
 };
 
+<<<<<<< HEAD
+=======
+/** Styles for HomeScreen */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
 const styles = StyleSheet.create({
   container: {
     flex: 1,

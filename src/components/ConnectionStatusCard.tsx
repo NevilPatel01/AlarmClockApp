@@ -1,11 +1,15 @@
+<<<<<<< HEAD
 // Connection status indicator component
 
+=======
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Text, IconButton } from 'react-native-paper';
 import { ConnectionStatus } from '../types';
 
 interface Props {
+<<<<<<< HEAD
   status: ConnectionStatus;
   onDisconnect?: () => void;
 }
@@ -16,12 +20,49 @@ const ConnectionStatusCard: React.FC<Props> = ({ status, onDisconnect }) => {
     return status.isConnected ? '#4CAF50' : '#757575';
   };
 
+=======
+  /** Current connection status object */
+  status: ConnectionStatus;
+  /** Optional callback when the user wants to disconnect */
+  onDisconnect?: () => void;
+}
+
+/**
+ * ConnectionStatusCardis to display the current Bluetooth device connection status.
+ * It shows icon indicating connection/error state, status text (Connected / Not Connected / Error), device address (if connected) and optional disconnect button.
+ * 
+ * @authors Nevil Patel(000892482) and Jaskirat Kaur(000904397)
+ * We certify that this material is our original work.
+ * No other person's work has been used without suitable acknowledgment and we have not made my work available to anyone else.
+ */
+const ConnectionStatusCard: React.FC<Props> = ({ status, onDisconnect }) => {
+  /**
+   * Returns the color corresponding to the status.
+   * @returns {string} Hex color code
+   */
+  const getStatusColor = () => {
+    if (status.error) return '#B00020'; // Red for errors
+    return status.isConnected ? '#4CAF50' : '#757575'; // Green if connected, gray otherwise
+  };
+
+  /**
+   * Returns the status text to display.
+   * @returns {string} Status description
+   */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   const getStatusText = () => {
     if (status.error) return `Error: ${status.error}`;
     if (status.isConnected) return `Connected to ${status.deviceName}`;
     return 'Not connected';
   };
 
+<<<<<<< HEAD
+=======
+  /**
+   * Returns the icon name corresponding to the status.
+   * @returns {string} Icon name from react-native-paper
+   */
+>>>>>>> dad1af36a7b4e25035f1faa06181d253a64e5244
   const getStatusIcon = () => {
     if (status.error) return 'alert-circle';
     return status.isConnected ? 'bluetooth-connect' : 'bluetooth-off';
